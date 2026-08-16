@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>lanofgajanan.pp.ua — Coming Soon</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;800&family=Space+Grotesk:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0a0d;
+    --green: #39ff88;
+    --purple: #b14bff;
+    --red: #ff3860;
+    --text-dim: #8a8a95;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html, body {
+    height: 100%;
+    background: var(--bg);
+    overflow: hidden;
+    font-family: 'Space Grotesk', sans-serif;
+  }
+
+  body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+  }
+
+  /* subtle scanline overlay */
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background: repeating-linear-gradient(
+      0deg,
+      rgba(255,255,255,0.02) 0px,
+      rgba(255,255,255,0.02) 1px,
+      transparent 1px,
+      transparent 3px
+    );
+    pointer-events: none;
+    z-index: 2;
+  }
+
+  /* faint grid backdrop */
+  body::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(57,255,136,0.05) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(57,255,136,0.05) 1px, transparent 1px);
+    background-size: 48px 48px;
+    mask-image: radial-gradient(ellipse at center, black 0%, transparent 70%);
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  .content {
+    position: relative;
+    z-index: 3;
+    text-align: center;
+    padding: 24px;
+  }
+
+  .tag {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: clamp(11px, 1.6vw, 13px);
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--purple);
+    margin-bottom: 22px;
+    opacity: 0.85;
+  }
+
+  h1 {
+    font-family: 'Orbitron', sans-serif;
+    font-weight: 800;
+    font-size: clamp(28px, 7vw, 72px);
+    letter-spacing: 0.04em;
+    color: #f2f2f5;
+    text-shadow:
+      0 0 8px rgba(57,255,136,0.55),
+      0 0 24px rgba(57,255,136,0.25);
+    position: relative;
+    display: inline-block;
+  }
+
+  h1 .glitch-layer {
+    position: absolute;
+    inset: 0;
+    color: var(--red);
+    opacity: 0;
+    clip-path: inset(0 0 0 0);
+  }
+
+  @keyframes glitch {
+    0%, 92%, 100% { opacity: 0; transform: translate(0,0); }
+    93% { opacity: 0.7; transform: translate(-2px, 1px); clip-path: inset(10% 0 60% 0); }
+    95% { opacity: 0.5; transform: translate(2px, -1px); clip-path: inset(60% 0 5% 0); }
+    97% { opacity: 0.6; transform: translate(-1px, 0); clip-path: inset(30% 0 40% 0); }
+  }
+
+  h1 .glitch-layer { animation: glitch 4.5s infinite; }
+  h1 .glitch-layer.purple { color: var(--purple); animation-delay: 0.15s; }
+
+  .status-line {
+    margin-top: 30px;
+    font-size: clamp(13px, 2vw, 15px);
+    color: var(--text-dim);
+    letter-spacing: 0.02em;
+  }
+
+  .status-line .prompt { color: var(--green); }
+  .status-line .typed { color: #d6d6dc; }
+
+  .cursor {
+    display: inline-block;
+    width: 8px;
+    height: 1em;
+    background: var(--green);
+    margin-left: 4px;
+    vertical-align: middle;
+    animation: blink 1s step-end infinite;
+  }
+
+  @keyframes blink {
+    0%, 49% { opacity: 1; }
+    50%, 100% { opacity: 0; }
+  }
+
+  .bar {
+    margin-top: 34px;
+    width: min(320px, 70vw);
+    height: 2px;
+    background: rgba(255,255,255,0.08);
+    position: relative;
+    overflow: hidden;
+    border-radius: 2px;
+  }
+
+  .bar span {
+    position: absolute;
+    left: -40%;
+    top: 0;
+    height: 100%;
+    width: 40%;
+    background: linear-gradient(90deg, transparent, var(--green), var(--purple), transparent);
+    animation: sweep 2.2s ease-in-out infinite;
+  }
+
+  @keyframes sweep {
+    0% { left: -40%; }
+    100% { left: 100%; }
+  }
+
+  footer {
+    position: fixed;
+    bottom: 22px;
+    z-index: 3;
+    font-size: 12px;
+    letter-spacing: 0.15em;
+    color: var(--text-dim);
+    text-transform: uppercase;
+    opacity: 0.6;
+  }
+</style>
+</head>
+<body>
+  <div class="content">
+    <div class="tag">Under construction</div>
+    <h1>
+      GAJANAN.LOHAR
+      <span class="glitch-layer">GAJANAN.LOHAR</span>
+      <span class="glitch-layer purple">GAJANAN.LOHAR</span>
+    </h1>
+    <div class="status-line">
+      <span class="prompt">&gt;</span>
+      <span class="typed" id="typed"></span><span class="cursor"></span>
+    </div>
+    <div class="bar"><span></span></div>
+  </div>
+  <footer>lanofgajanan.pp.ua</footer>
+
+<script>
+  const messages = [
+    "compiling portfolio...",
+    "loading assets...",
+    "almost there, check back soon"
+  ];
+  const el = document.getElementById('typed');
+  let m = 0, i = 0, deleting = false;
+
+  function tick() {
+    const current = messages[m];
+    el.textContent = deleting ? current.slice(0, i--) : current.slice(0, i++);
+
+    let delay = deleting ? 30 : 55;
+    if (!deleting && i > current.length) { delay = 1400; deleting = true; }
+    else if (deleting && i < 0) { deleting = false; m = (m + 1) % messages.length; i = 0; delay = 300; }
+
+    setTimeout(tick, delay);
+  }
+  tick();
+</script>
+</body>
+</html>
