@@ -115,7 +115,7 @@ export default function App() {
       <div className="absolute bottom-6 sm:bottom-8 w-full flex justify-center items-center gap-3 text-[10px] sm:text-xs font-mono-hud text-zinc-500 tracking-widest z-30 pointer-events-none opacity-80">
         <span>GAJANAN LOHAR</span>
         <span className="text-zinc-700">|</span>
-        <span>OBSIDIAN_TERMINAL v1.0.0</span>
+        <span>OBSIDIAN_TERMINAL v2.0.0</span>
       </div>
     </main>
   );
