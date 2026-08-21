@@ -152,7 +152,7 @@ emit root-relative `/assets/...` for the nginx root mount.
 ### Results
 - Site is now fully responsive down to 360px without content clipping or HUD overlap.
 - Rebuilt (`npm run build`) and redeployed.
-- Live bundle: `assets/index-D4Suk-X0.js`.
+- Live bundle: `assets/index-C6-FXoxz.js`.
 
 ### Commit and Push
 - Committed as `feat: v2.1.0 mobile responsiveness + remove audio`.

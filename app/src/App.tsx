@@ -10,7 +10,15 @@ import { GlitchHeroText } from './components/GlitchHeroText';
 import { HUDCornerTelemetry } from './components/HUDCornerTelemetry';
 
 export default function App() {
+  const [isMobile, setIsMobile] = useState(false);
   const [cursorPos, setCursorPos] = useState({ x: 0, y: 0 });
+
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 640);
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
   const [cursorCoords, setCursorCoords] = useState({
     lat: '34.8522',
     lng: '-118.2437',
@@ -59,7 +67,6 @@ export default function App() {
     const initialY = window.innerHeight / 2;
     setCursorPos({ x: initialX, y: initialY });
     updateCoordinates(initialX, initialY);
-
     const handleMouseMove = (e: MouseEvent) => {
       setCursorPos({ x: e.clientX, y: e.clientY });
       updateCoordinates(e.clientX, e.clientY);
@@ -115,7 +122,9 @@ export default function App() {
       <div className="relative sm:absolute sm:bottom-8 w-full flex justify-center items-center gap-3 text-[10px] sm:text-xs font-mono-hud text-zinc-500 tracking-widest z-30 pointer-events-none opacity-80 mt-6 mb-2 sm:mt-0">
         <span>GAJANAN LOHAR</span>
         <span className="text-zinc-700">|</span>
-        <span>OBSIDIAN_TERMINAL v2.0.0</span>
+        <span>OBSIDIAN_TERMINAL v2.1.0</span>
+        <span className="text-zinc-700">|</span>
+        <span className="text-[#34d399]">{isMobile ? 'MOBILE' : 'PC'}</span>
       </div>
     </main>
   );
