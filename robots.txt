@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://lanofgajanan.pp.ua/sitemap.xml
