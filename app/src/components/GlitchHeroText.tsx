@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react';
-import { sound } from '../utils/audio';
 
 interface GlitchHeroTextProps {
   key?: string | number;
@@ -55,7 +54,6 @@ export function GlitchHeroText({
 
   const triggerGlitchBurst = () => {
     setIsGlitching(true);
-    sound.playGlitch();
     setTimeout(() => {
       setIsGlitching(false);
     }, 280);
@@ -68,7 +66,7 @@ export function GlitchHeroText({
         <div className="relative select-none">
           {/* Background chromatic layer 1 (Emerald Green Split) */}
           <h1
-            className={`font-cyber text-3xl sm:text-5xl md:text-7xl lg:text-8xl font-black tracking-widest text-[#34d399] absolute top-0 left-0 w-full select-none pointer-events-none transition-transform duration-75 ${
+            className={`font-cyber text-[clamp(1.6rem,9vw,3.25rem)] leading-none tracking-[0.08em] sm:tracking-widest sm:text-5xl md:text-7xl lg:text-8xl font-black text-[#34d399] absolute top-0 left-0 w-full select-none pointer-events-none transition-transform duration-75 ${
               isGlitching
                 ? 'translate-x-[6px] -translate-y-[3px] opacity-90 blur-[1px]'
                 : 'translate-x-[2px] opacity-70'
@@ -82,7 +80,7 @@ export function GlitchHeroText({
 
           {/* Background chromatic layer 2 (Soft Violet Split) */}
           <h1
-            className={`font-cyber text-3xl sm:text-5xl md:text-7xl lg:text-8xl font-black tracking-widest text-[#a78bfa] absolute top-0 left-0 w-full select-none pointer-events-none transition-transform duration-75 ${
+            className={`font-cyber text-[clamp(1.6rem,9vw,3.25rem)] leading-none tracking-[0.08em] sm:tracking-widest sm:text-5xl md:text-7xl lg:text-8xl font-black text-[#a78bfa] absolute top-0 left-0 w-full select-none pointer-events-none transition-transform duration-75 ${
               isGlitching
                 ? '-translate-x-[7px] translate-y-[4px] opacity-90 blur-[1px]'
                 : '-translate-x-[2px] opacity-75'
@@ -96,7 +94,7 @@ export function GlitchHeroText({
 
           {/* Background chromatic layer 3 (Cyan Split) */}
           <h1
-            className={`font-cyber text-3xl sm:text-5xl md:text-7xl lg:text-8xl font-black tracking-widest text-[#38bdf8] absolute top-0 left-0 w-full select-none pointer-events-none transition-transform duration-75 ${
+            className={`font-cyber text-[clamp(1.6rem,9vw,3.25rem)] leading-none tracking-[0.08em] sm:tracking-widest sm:text-5xl md:text-7xl lg:text-8xl font-black text-[#38bdf8] absolute top-0 left-0 w-full select-none pointer-events-none transition-transform duration-75 ${
               isGlitching
                 ? 'translate-x-[3px] translate-y-[2px] opacity-80'
                 : 'translate-y-[1px] opacity-60'
@@ -108,7 +106,7 @@ export function GlitchHeroText({
           {/* Foreground Main Text */}
           <h1
             id="hero-cyber-title"
-            className="font-cyber text-3xl sm:text-5xl md:text-7xl lg:text-8xl font-black tracking-widest text-[#ffffff] relative z-10 drop-shadow-[0_0_25px_rgba(255,255,255,0.45)]"
+            className="font-cyber text-[clamp(1.6rem,9vw,3.25rem)] leading-none tracking-[0.08em] sm:tracking-widest sm:text-5xl md:text-7xl lg:text-8xl font-black text-[#ffffff] relative z-10 drop-shadow-[0_0_25px_rgba(255,255,255,0.45)]"
           >
             {title}
           </h1>

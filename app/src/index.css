@@ -21,7 +21,15 @@
     color: #fafafa;
     margin: 0;
     padding: 0;
-    overflow: hidden;
+    overflow-x: hidden;
+  }
+}
+
+/* Mobile: allow the stage to scroll vertically so nothing is clipped on short viewports */
+@media (max-width: 640px) {
+  body {
+    overflow-x: hidden;
+    overflow-y: auto;
   }
 }
 

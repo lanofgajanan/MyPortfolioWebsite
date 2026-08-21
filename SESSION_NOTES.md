@@ -134,3 +134,27 @@ emit root-relative `/assets/...` for the nginx root mount.
 - `CyberVortex.tsx` left in source but not wired into the app.
 - `index.html.v1.bak` left on disk (gitignored); safe to delete once
   the v2.0.0 deploy is confirmed stable.
+
+---
+
+## Session 3 — 2026-08-21 — Mobile-friendly redesign (v2.1.0)
+
+**Goal:** Fix mobile clipping and layout collisions in the Obsidian HUD design.
+
+### What was done
+- Removed dead audio engine ( deleted).
+- Restructured main layout:  →  + scrollable body.
+- HUD Telemetry: Collapsed 4-corner absolute HUD to single bottom-center chip under 640px.
+- Hero Title: Fluid  typography to prevent overflow.
+- Progress bar: Responsive segment scaling.
+- Footer: Static/flow positioning on mobile.
+
+### Results
+- Site is now fully responsive down to 360px without content clipping.
+- Verified build and live deployment.
+- Deployed artifact: .
+
+### Commit and Push
+git add .
+git commit -m "feat: v2.1.0 mobile responsiveness (scrollable stage, collapsed HUD, fluid title)"
+git push

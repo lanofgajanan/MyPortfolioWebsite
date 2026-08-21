@@ -129,3 +129,15 @@ and references to commit hashes where relevant.
 [1.2.0]: https://github.com/lanofgajanan/MyPortfolioWebsite/compare/1.1.0...1.2.0
 [1.1.0]: https://github.com/lanofgajanan/MyPortfolioWebsite/compare/1.0.0...1.1.0
 [1.0.0]: https://github.com/lanofgajanan/MyPortfolioWebsite/compare/0.1.0...1.0.0
+## [2.1.0] - 2026-08-21
+### Added
+- Mobile-first layout: stage now min-height + scroll-safe instead of a fixed h-screen clip.
+### Changed
+- Hero title fluid-scale clamp() + reduced mobile tracking so it never overflows.
+- HUD corner telemetry collapses to a single compact chip under `sm` (no corner collision).
+- Progress bar shrinks segment pitch on mobile; frame handles small widths (@ overflow-hidden).
+- Footer becomes static + bottom-safe on mobile.
+### Fixed
+- Horizontal overflow on <400px screens; content clipping on short viewports.
+
+[2.1.0]: https://github.com/lanofgajanan/MyPortfolioWebsite/compare/2.0.0...2.1.0

@@ -85,7 +85,7 @@ export default function App() {
   return (
     <main
       id="obsidian-hud-root"
-      className="relative w-screen h-screen overflow-hidden bg-[#09090b] text-[#fafafa] flex flex-col justify-between select-none cursor-default"
+      className="relative w-full min-h-screen overflow-x-hidden bg-[#09090b] text-[#fafafa] flex flex-col justify-between select-none cursor-default"
     >
       {/* 1. Dynamic Interactive Glitch Background responding near cursor */}
       <InteractiveGlitchBackground cursorPos={cursorPos} />
@@ -112,7 +112,7 @@ export default function App() {
       </div>
 
       {/* 7. Footer Text */}
-      <div className="absolute bottom-6 sm:bottom-8 w-full flex justify-center items-center gap-3 text-[10px] sm:text-xs font-mono-hud text-zinc-500 tracking-widest z-30 pointer-events-none opacity-80">
+      <div className="relative sm:absolute sm:bottom-8 w-full flex justify-center items-center gap-3 text-[10px] sm:text-xs font-mono-hud text-zinc-500 tracking-widest z-30 pointer-events-none opacity-80 mt-6 mb-2 sm:mt-0">
         <span>GAJANAN LOHAR</span>
         <span className="text-zinc-700">|</span>
         <span>OBSIDIAN_TERMINAL v2.0.0</span>
