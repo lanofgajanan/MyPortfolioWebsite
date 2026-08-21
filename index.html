@@ -196,6 +196,9 @@
     .tag { letter-spacing: 0.22em; }
     h1 { letter-spacing: 0.02em; }
     footer { position: static; margin-top: 32px; }
+    /* On mobile, use auto min-height (scrollable) so the centered flex works
+       but doesn't force a large empty gap below short content. */
+    html, body { min-height: auto; }
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -218,6 +221,14 @@
     opacity: 0.7;
     vertical-align: super;
   }
+
+  .vp {
+    font-size: 9px;
+    letter-spacing: 0.08em;
+    color: var(--green);
+    opacity: 0.6;
+    margin-left: 4px;
+  }
 </style>
 </head>
 <body>
@@ -238,7 +249,7 @@
       <p class="blurb">Site under construction — please enable JavaScript to see the live preview.</p>
     </noscript>
   </div>
-  <footer>lanofgajanan.pp.ua<span class="ver"> · v1.1</span></footer>
+  <footer>lanofgajanan.pp.ua<span class="ver"> · v1.2</span><span class="vp" id="vp"></span></footer>
 
 <script type="application/ld+json">
 {
@@ -272,6 +283,18 @@
     setTimeout(tick, delay);
   }
   tick();
+
+  // Viewport-mode indicator: shows "PC" or "MOBILE" next to the version,
+  // updating live if you resize across the 480px breakpoint.
+  (function vp() {
+    var el = document.getElementById('vp');
+    function set() {
+      var w = window.innerWidth;
+      el.textContent = w <= 480 ? ' · MOBILE' : ' · PC';
+    }
+    set();
+    window.addEventListener('resize', set);
+  })();
 </script>
 </body>
 </html>
