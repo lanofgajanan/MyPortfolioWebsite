@@ -137,24 +137,23 @@ emit root-relative `/assets/...` for the nginx root mount.
 
 ---
 
-## Session 3 — 2026-08-21 — Mobile-friendly redesign (v2.1.0)
+## Session 3 — 2026-08-21 — Mobile-friendly redesign (v2.1.0) + Audio Removal
 
-**Goal:** Fix mobile clipping and layout collisions in the Obsidian HUD design.
+**Goal:** Fix mobile clipping, layout collisions, and remove unused audio engine.
 
 ### What was done
-- Removed dead audio engine ( deleted).
-- Restructured main layout:  →  + scrollable body.
-- HUD Telemetry: Collapsed 4-corner absolute HUD to single bottom-center chip under 640px.
-- Hero Title: Fluid  typography to prevent overflow.
-- Progress bar: Responsive segment scaling.
-- Footer: Static/flow positioning on mobile.
+- **Removed Audio:** Deleted `app/src/utils/audio.ts` and stripped all sound triggers from `GlitchHeroText.tsx`.
+- **Structural Layout:** Changed `main` from `h-screen` to `min-h-screen` and enabled vertical scrolling on `body` for mobile.
+- **HUD Telemetry:** Collapsed the four absolute HUD corners into a single compact mobile chip under 640px to prevent collisions.
+- **Fluid Title:** Switched hero title to `clamp()` typography with tighter tracking on mobile so it never overflows.
+- **Progress Bar:** Made segments shrink (`w-1.5`) and the track scroll-safe on small screens.
+- **Footer:** Fixed footer to sit at the end of the content flow on mobile instead of floating over UI.
 
 ### Results
-- Site is now fully responsive down to 360px without content clipping.
-- Verified build and live deployment.
-- Deployed artifact: .
+- Site is now fully responsive down to 360px without content clipping or HUD overlap.
+- Rebuilt (`npm run build`) and redeployed.
+- Live bundle: `assets/index-D4Suk-X0.js`.
 
 ### Commit and Push
-git add .
-git commit -m "feat: v2.1.0 mobile responsiveness (scrollable stage, collapsed HUD, fluid title)"
-git push
+- Committed as `feat: v2.1.0 mobile responsiveness + remove audio`.
+- Pushed to GitHub `main`.

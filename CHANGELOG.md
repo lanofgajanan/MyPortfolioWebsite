@@ -6,6 +6,22 @@ and references to commit hashes where relevant.
 
 ## [Unreleased]
 
+## [2.1.0] - 2026-08-21
+### Added
+- Mobile-first layout: stage now min-height + scroll-safe instead of a fixed h-screen clip.
+- Mobile HUD chip: single compact telemetry display on small screens to prevent corner collisions.
+
+### Changed
+- Hero title fluid-scale `clamp()` + reduced mobile tracking so it never overflows.
+- Progress bar shrinks segment pitch on mobile; frame handles small widths.
+- Footer becomes static + bottom-safe on mobile viewports.
+- Removed ambient sound engine (Web Audio) as it was unused.
+
+### Fixed
+- Horizontal overflow on <400px screens.
+- Content clipping on short mobile viewports.
+- Collision of HUD corners on narrow displays.
+
 ## [2.0.0] - 2026-08-21
 ### Changed — full redesign
 - Replaced the single-file static `index.html` "Coming Soon" page with the **Obsidian Cyber
@@ -125,6 +141,7 @@ and references to commit hashes where relevant.
   human/agent-readable summary.
 - Do not add secrets/API keys to any file here (see security policy in prior edits).
 
+[2.1.0]: https://github.com/lanofgajanan/MyPortfolioWebsite/compare/2.0.0...2.1.0
 [2.0.0]: https://github.com/lanofgajanan/MyPortfolioWebsite/compare/1.2.0...2.0.0
 [1.2.0]: https://github.com/lanofgajanan/MyPortfolioWebsite/compare/1.1.0...1.2.0
 [1.1.0]: https://github.com/lanofgajanan/MyPortfolioWebsite/compare/1.0.0...1.1.0
