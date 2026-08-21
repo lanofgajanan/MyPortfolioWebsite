@@ -6,6 +6,53 @@ and references to commit hashes where relevant.
 
 ## [Unreleased]
 
+## [2.0.0] - 2026-08-21
+### Changed — full redesign
+- Replaced the single-file static `index.html` "Coming Soon" page with the **Obsidian Cyber
+  Terminal & HUD** — a React 19 + Vite 6 + Tailwind v4 single-page app built from the design
+  in `app/` (Google AI Studio export).
+- New interactive canvas glitch background that warps a cyber grid around the cursor and
+  emits glitch-slice sparks on movement (`InteractiveGlitchBackground`).
+- New centerpiece glitch title with chromatic RGB-split layers and a typewritten
+  system-status beacon (`GlitchHeroText`), plus a segmented, colour-graded progress bar
+  with telemetry sub-labels (`SegmentProgressBar`).
+- New live four-corner HUD telemetry overlay showing cursor-derived GPS-style coordinates
+  and hex codes (`HUDCornerTelemetry`).
+- CRT scanline overlay + animated scanline sweep over the whole viewport.
+- Web Audio API ambient sound engine (`src/utils/audio.ts`) for glitch blips on title
+  bursts; gated behind a user-gesture-initiated AudioContext (autoplay-policy safe).
+- Theme palette shifted from green/purple/red to emerald `#34d399` / violet `#a78bfa` /
+  cyan `#38bdf8` on near-black `#09090b`.
+- Footer tag updated to `OBSIDIAN_TERMINAL v2.0.0`.
+
+### Architecture
+- Source lives in `app/` (React + Vite + TypeScript + Tailwind). The deployable artifacts —
+  `index.html` and `assets/` — are committed at the repo root so the nginx container serves
+  them directly (it mounts this directory read-only at `/usr/share/nginx/html`).
+- `app/package.json` trimmed to only the dependencies the components actually import
+  (react, react-dom, tailwind, vite, plugin-react, typescript). Unused AI Studio deps
+  (`@google/genai`, `express`, `motion`, `lucide-react`, `dotenv`) were dropped for a
+  leaner, faster build. Dead component `CyberVortex` is retained in source but unused.
+
+### Preserved (carried over from v1.x)
+- All SEO/structured-data infrastructure from v1.0.0: `<meta description>`, robots, theme-color,
+  Apple web-app tags, canonical URL, Open Graph + Twitter cards, JSON-LD Person, SVG favicon.
+- `robots.txt`, `sitemap.xml` (unchanged — same canonical URL).
+- `404.html` restyled to the new palette and "SIGNAL LOST" theme.
+- `noscript` fallback restyled to match the new HUD theme.
+- Mobile responsiveness, `prefers-reduced-motion`, and accessibility considerations
+  (Tailwind handles base layout; reduced-motion still halts the CSS scanline/glitch keyframes).
+- `.gitignore` updated: `app/node_modules/` and `app/dist/` are ignored; the built
+  root `assets/` + `index.html` remain committed as the deployable output.
+
+### Notes for Agents
+- To rebuild after editing source: `cd app && npm install && npm run build`, then copy
+  `app/dist/index.html` → root `index.html` and `app/dist/assets/` → root `assets/`.
+- The build emits root-relative `/assets/...` paths, which is correct for the nginx root
+  mount. Do not add a `base` path to `vite.config.ts`.
+- `index.html.v1.bak` is a local backup of the v1.x page (gitignored via `*.bak`); delete
+  once the v2.0.0 deploy is confirmed good.
+
 ## [1.2.0] - 2026-08-21
 ### Added
 - Viewport-mode indicator in footer — shows "PC" or "MOBILE" next to the version tag,
@@ -71,11 +118,14 @@ and references to commit hashes where relevant.
 ## Notes for Agents
 - Live URL: `https://lanofgajanan.pp.ua/` (custom domain; GitHub Pages configured).
 - Repo: `lanofgajanan/MyPortfolioWebsite` on GitHub.
-- The site is a single-file static page (`index.html`) served via GitHub Pages.
+- The site is a built React SPA. Source is in `app/`; the committed deployable artifacts
+  are `index.html` + `assets/` at the repo root, served by an nginx:alpine Docker container
+  (mounted read-only) behind Nginx Proxy Manager for the custom domain `lanofgajanan.pp.ua`.
 - Commit history in this repo is the source of truth for exact diffs; this file is a
   human/agent-readable summary.
 - Do not add secrets/API keys to any file here (see security policy in prior edits).
 
+[2.0.0]: https://github.com/lanofgajanan/MyPortfolioWebsite/compare/1.2.0...2.0.0
 [1.2.0]: https://github.com/lanofgajanan/MyPortfolioWebsite/compare/1.1.0...1.2.0
 [1.1.0]: https://github.com/lanofgajanan/MyPortfolioWebsite/compare/1.0.0...1.1.0
 [1.0.0]: https://github.com/lanofgajanan/MyPortfolioWebsite/compare/0.1.0...1.0.0

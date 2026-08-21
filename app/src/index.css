@@ -1,0 +1,156 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --font-geist: 'Geist', -apple-system, BlinkMacSystemFont, sans-serif;
+    --font-mono: 'Geist Mono', 'Share Tech Mono', monospace;
+    --font-cyber: 'Orbitron', 'Geist Mono', sans-serif;
+    --color-primary: #a78bfa;
+    --color-bg: #09090b;
+    --color-emerald: #34d399;
+    --color-cyan: #38bdf8;
+    --color-surface-lowest: #050507;
+    --color-surface: #0c0c0f;
+    --color-surface-hover: #18181b;
+    --color-border: #27272a;
+  }
+
+  body {
+    font-family: var(--font-geist);
+    background-color: var(--color-bg);
+    color: #fafafa;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+  }
+}
+
+.font-cyber {
+  font-family: 'Orbitron', 'Geist Mono', sans-serif;
+}
+
+.font-mono-hud {
+  font-family: 'Share Tech Mono', 'Geist Mono', monospace;
+}
+
+/* CRT Scanline Effect */
+.crt-overlay {
+  background: linear-gradient(
+    rgba(18, 16, 26, 0) 50%, 
+    rgba(0, 0, 0, 0.35) 50%
+  ), linear-gradient(
+    90deg,
+    rgba(255, 0, 0, 0.03),
+    rgba(0, 255, 0, 0.01),
+    rgba(0, 0, 255, 0.03)
+  );
+  background-size: 100% 3px, 6px 100%;
+  pointer-events: none;
+}
+
+.scanline-sweep {
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: linear-gradient(
+    to bottom,
+    transparent 0%,
+    rgba(167, 139, 250, 0.04) 50%,
+    rgba(52, 211, 153, 0.08) 51%,
+    transparent 55%
+  );
+  background-size: 100% 800px;
+  animation: scanSweep 6s linear infinite;
+  pointer-events: none;
+}
+
+@keyframes scanSweep {
+  0% { transform: translateY(-100%); }
+  100% { transform: translateY(100%); }
+}
+
+/* Glitch Chromatic Text Shadows */
+.glitch-title {
+  position: relative;
+  text-shadow: 
+    -2px 0 #34d399,
+    2px 2px #a78bfa,
+    0 -2px #38bdf8;
+  letter-spacing: 0.12em;
+}
+
+.glitch-title::before,
+.glitch-title::after {
+  content: attr(data-text);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.glitch-title::before {
+  left: 2px;
+  text-shadow: -2px 0 #34d399;
+  clip-path: polygon(0 0, 100% 0, 100% 45%, 0 45%);
+  animation: glitch-anim-1 2.5s infinite linear alternate-reverse;
+}
+
+.glitch-title::after {
+  left: -2px;
+  text-shadow: 2px 0 #a78bfa, -1px -1px #38bdf8;
+  clip-path: polygon(0 55%, 100% 55%, 100% 100%, 0 100%);
+  animation: glitch-anim-2 3s infinite linear alternate-reverse;
+}
+
+@keyframes glitch-anim-1 {
+  0% { transform: translate(0); }
+  20% { transform: translate(-2px, 1px); }
+  40% { transform: translate(-1px, -1px); }
+  60% { transform: translate(2px, 0); }
+  80% { transform: translate(1px, -2px); }
+  100% { transform: translate(0); }
+}
+
+@keyframes glitch-anim-2 {
+  0% { transform: translate(0); }
+  25% { transform: translate(2px, -1px); }
+  50% { transform: translate(-2px, 2px); }
+  75% { transform: translate(1px, 1px); }
+  100% { transform: translate(0); }
+}
+
+/* Vortex swirl animation */
+@keyframes spinSlow {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes spinSlowReverse {
+  from { transform: rotate(360deg); }
+  to { transform: rotate(0deg); }
+}
+
+.animate-spin-slow {
+  animation: spinSlow 30s linear infinite;
+}
+
+.animate-spin-slow-reverse {
+  animation: spinSlowReverse 22s linear infinite;
+}
+
+/* Custom terminal scrollbars */
+::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+::-webkit-scrollbar-track {
+  background: #09090b;
+}
+::-webkit-scrollbar-thumb {
+  background: #27272a;
+  border-radius: 2px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #a78bfa;
+}
+

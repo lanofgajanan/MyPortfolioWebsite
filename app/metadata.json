@@ -1,0 +1,7 @@
+{
+  "name": "Obsidian Cyber Terminal & HUD",
+  "description": "High-contrast developer cyberpunk terminal HUD with biometric telemetry, glitch shaders, audio waveform, and system diagnostic protocols.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
+
