@@ -13,11 +13,13 @@ served.
 ### What was done
 - Extracted and analyzed `website_stuff/aegis-docs.zip` containing the Aegis PRD, engine docs, and scroll-driven canvas teaser page.
 - Created `temp-site/app/src/components/HUDNavigation.tsx` for top-level cyberpunk tab switching (`[ 01 // OVERVIEW ]` and `[ 02 // PROJECTS ]`).
-- Created `temp-site/app/src/components/ProjectsView.tsx` with a rich system archive matrix highlighting Aegis with status badges, capabilities, and action triggers.
+- Created `temp-site/app/src/components/ProjectsView.tsx` with a single-card showcase for Aegis (removed placeholders).
 - Created `temp-site/app/src/components/aegis/AegisCanvasTerrain.tsx` and `AegisProjectView.tsx` implementing the full Aegis experience, scroll-driven 2D perspective terrain grid, terminal diagnostic block, and minimal home navigation button.
 - Added URL hash routing (`#overview`, `#projects`, `#aegis`) with hashchange listeners for native browser navigation.
+- Fixed Bug 1 (main website scrolling): enforced strict `overflow-hidden` and viewport locking on Overview and Projects so the single page never scrolls.
+- Fixed Bug 2 (Aegis scroll lock): dynamically set `overflowY: auto` on document and body when viewing Aegis so the full page and canvas terrain scroll smoothly.
 - Created standalone static page at `temp-site/aegis/index.html` with matching top Home header.
-- Rebuilt app via `npm run build` and deployed new bundles (`index-c1QuWOzf.js`, `index-BCg5Fo3F.css`) directly to `temp-site/` root.
+- Rebuilt app via `npm run build` and deployed new bundles (`index-CF_GE9Uk.js`, `index-C6KJVl1p.css`) directly to `temp-site/` root.
 
 ---
 

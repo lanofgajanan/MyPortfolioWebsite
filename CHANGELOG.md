@@ -9,13 +9,18 @@ and references to commit hashes where relevant.
 ## [2.2.0] - 2026-09-01
 ### Added
 - **HUD Navigation Bar (`HUDNavigation.tsx`)**: Top-level cyberpunk tab selector allowing users to switch between `[ 01 // OVERVIEW ]` and `[ 02 // PROJECTS ]` with deep-link hash routing (`#overview`, `#projects`, `#aegis`).
-- **Projects Matrix (`ProjectsView.tsx`)**: High-tech directory view featuring the newly added **Aegis** hardware/privacy system and future project incubation slots.
+- **Projects Matrix (`ProjectsView.tsx`)**: Single-project showcase focused exclusively on **Aegis**.
 - **Aegis Project Experience (`AegisProjectView.tsx` & `AegisCanvasTerrain.tsx`)**: Full port and integration of the Aegis product page featuring its scroll-driven 2D perspective canvas terrain grid, terminal diagnostics block (`root@aegis:~$ status`), capability list, and responsive layout.
 - **Home Navigation Buttons**: Added minimal cyberpunk top bar with `HOME` and `PROJECTS` return buttons on both the in-app Aegis view and the standalone `/aegis/index.html` static route.
 - **Standalone Aegis Route**: Standalone static teaser page deployed to `/aegis/index.html`.
 
+### Fixed
+- **Single-Screen Scroll Lock**: Fixed issue where the main Overview and Projects tabs could sometimes scroll; strictly locked viewport to single page (`h-screen max-h-screen overflow-hidden`).
+- **Aegis Page Scrolling**: Removed root document scroll lock when viewing the Aegis project page so the full page and canvas terrain physics scroll naturally and smoothly.
+- **Project Catalog**: Cleaned up project list to keep strictly the single Aegis project without placeholders.
+
 ### Changed
-- Rebuilt production bundle (`index-c1QuWOzf.js` and `index-BCg5Fo3F.css`) and synced to repository root.
+- Rebuilt production bundle (`index-CF_GE9Uk.js` and `index-C6KJVl1p.css`) and synced to repository root.
 - Integrated Google Fonts for `Space Grotesk` and `JetBrains Mono`.
 ### Added
 - Mobile-first layout: stage now min-height + scroll-safe instead of a fixed h-screen clip.

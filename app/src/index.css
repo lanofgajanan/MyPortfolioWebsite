@@ -32,14 +32,6 @@
   }
 }
 
-/* Mobile: allow the stage to scroll vertically so nothing is clipped on short viewports */
-@media (max-width: 640px) {
-  body {
-    overflow-x: hidden;
-    overflow-y: auto;
-  }
-}
-
 .font-cyber {
   font-family: 'Orbitron', 'Geist Mono', sans-serif;
 }

@@ -35,18 +35,30 @@ export default function App() {
     return () => window.removeEventListener('hashchange', handleHashChange);
   }, []);
 
+  // Lock/unlock body scroll based on active view
+  useEffect(() => {
+    if (activeTab === 'aegis') {
+      document.documentElement.style.overflowY = 'auto';
+      document.body.style.overflowY = 'auto';
+      document.documentElement.style.overflowX = 'hidden';
+      document.body.style.overflowX = 'hidden';
+    } else {
+      document.documentElement.style.overflow = 'hidden';
+      document.body.style.overflow = 'hidden';
+      window.scrollTo(0, 0);
+    }
+  }, [activeTab]);
+
   const handleSelectTab = (tab: TabType) => {
     setActiveTab(tab);
     if (tab === 'overview') {
       window.location.hash = '';
-      window.scrollTo({ top: 0, behavior: 'smooth' });
     } else if (tab === 'projects') {
       window.location.hash = 'projects';
-      window.scrollTo({ top: 0, behavior: 'smooth' });
     } else if (tab === 'aegis') {
       window.location.hash = 'aegis';
-      window.scrollTo({ top: 0, behavior: 'smooth' });
     }
+    window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
   };
 
   useEffect(() => {
@@ -120,7 +132,7 @@ export default function App() {
     };
   }, [updateCoordinates]);
 
-  // If in Aegis standalone project view
+  // If in Aegis standalone project view: render full scrollable page
   if (activeTab === 'aegis') {
     return (
       <AegisProjectView
@@ -133,7 +145,7 @@ export default function App() {
   return (
     <main
       id="obsidian-hud-root"
-      className="relative w-full min-h-screen overflow-x-hidden bg-[#09090b] text-[#fafafa] flex flex-col justify-between select-none cursor-default"
+      className="relative w-full h-screen h-[100dvh] max-h-screen overflow-hidden bg-[#09090b] text-[#fafafa] flex flex-col justify-between select-none cursor-default"
     >
       {/* 1. Dynamic Interactive Glitch Background responding near cursor */}
       <InteractiveGlitchBackground cursorPos={cursorPos} />
@@ -153,9 +165,9 @@ export default function App() {
       {/* 5. Minimalistic Four-Corner Live Cursor Coordinates */}
       <HUDCornerTelemetry cursorCoords={cursorCoords} />
 
-      {/* 6. Active View Content Area */}
+      {/* 6. Active View Content Area (strictly non-scrollable, perfectly centered) */}
       {activeTab === 'overview' ? (
-        <div className="flex-1 flex flex-col items-center justify-center relative z-10 w-full max-w-5xl mx-auto px-4 pointer-events-auto my-auto py-20 sm:py-24">
+        <div className="flex-1 flex flex-col items-center justify-center relative z-10 w-full max-w-5xl mx-auto px-4 pointer-events-auto">
           <GlitchHeroText
             title="GAJANAN LOHAR"
             status="SYSTEM STATUS: UNDER CONSTRUCTION // INITIALIZING BIO-PROTOCOLS..."
@@ -166,7 +178,7 @@ export default function App() {
           <SegmentProgressBar />
         </div>
       ) : (
-        <div className="flex-1 flex flex-col items-center relative z-10 w-full">
+        <div className="flex-1 flex flex-col items-center justify-center relative z-10 w-full max-w-3xl mx-auto px-4 pointer-events-auto">
           <ProjectsView
             onOpenProject={(projectId) => {
               if (projectId === 'aegis') {
@@ -178,10 +190,10 @@ export default function App() {
       )}
 
       {/* 7. Footer Text */}
-      <div className="relative sm:absolute sm:bottom-8 w-full flex justify-center items-center gap-3 text-[10px] sm:text-xs font-mono-hud text-zinc-500 tracking-widest z-30 pointer-events-none opacity-80 mt-6 mb-2 sm:mt-0">
+      <div className="relative sm:absolute sm:bottom-6 w-full flex justify-center items-center gap-3 text-[10px] sm:text-xs font-mono-hud text-zinc-500 tracking-widest z-30 pointer-events-none opacity-80 mb-3 sm:mb-0">
         <span>GAJANAN LOHAR</span>
         <span className="text-zinc-700">|</span>
-        <span>OBSIDIAN_TERMINAL v2.1.0</span>
+        <span>OBSIDIAN_TERMINAL v2.2.0</span>
         <span className="text-zinc-700">|</span>
         <span className="text-[#34d399]">{isMobile ? 'MOBILE' : 'PC'}</span>
       </div>
