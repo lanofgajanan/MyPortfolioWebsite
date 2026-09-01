@@ -1,0 +1,742 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- Primary SEO Meta -->
+<title>Aegis — Your data. Your server. Your rules.</title>
+<meta name="description" content="Aegis is a pre-configured mini PC putting private DNS, ad-blocking, personal cloud storage, and secure remote access under your own roof. No subscriptions. No corporate dashboards.">
+<meta name="keywords" content="Aegis, Self-Hosted Mini PC, Private DNS, Ad-Blocking, Personal Cloud, Self-Hosted Server, Privacy Hardware, Gajanan Lohar">
+<meta name="author" content="Gajanan Lohar">
+<meta name="robots" content="index, follow">
+<meta name="theme-color" content="#0a0e17">
+<link rel="canonical" href="https://lanofgajanan.pp.ua/aegis/">
+
+<!-- Open Graph -->
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Aegis">
+<meta property="og:title" content="Aegis — Your data. Your server. Your rules.">
+<meta property="og:description" content="A pre-configured mini PC putting private DNS, personal cloud, and secure remote access under your own roof.">
+<meta property="og:url" content="https://lanofgajanan.pp.ua/aegis/">
+
+<!-- Twitter -->
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Aegis — Your data. Your server. Your rules.">
+<meta name="twitter:description" content="A pre-configured mini PC putting private DNS, personal cloud, and secure remote access under your own roof.">
+
+<!-- Structured data (schema.org Product & WebPage) -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Product",
+  "name": "Aegis",
+  "description": "A pre-configured mini PC that puts private DNS, personal cloud storage, and secure remote network access back under your own roof.",
+  "brand": {
+    "@type": "Person",
+    "name": "Gajanan Lohar"
+  },
+  "category": "Hardware / Server / Networking"
+}
+</script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700;800&family=Space+Grotesk:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg: #0a0e17;
+    --bg-panel: #0d1420;
+    --line: #16202e;
+    --line-bright: #1a3a52;
+    --text: #e5e9f0;
+    --text-dim: #7d8aa0;
+    --text-dimmer: #4a5568;
+    --accent: #00d4ff;
+    --accent-dim: #0891b2;
+    --max-w: 720px;
+  }
+
+  *{ box-sizing: border-box; margin:0; padding:0; }
+
+  html{ scroll-behavior: smooth; }
+
+  body{
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 17px;
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+
+  /* header */
+  .aegis-header{
+    position: sticky;
+    top: 0;
+    z-index: 40;
+    width: 100%;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    background: rgba(10, 14, 23, 0.85);
+    border-bottom: 1px solid var(--line);
+  }
+
+  .header-inner{
+    max-width: var(--max-w);
+    margin: 0 auto;
+    padding: 0 24px;
+    height: 56px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+  }
+
+  .home-btn{
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--text-dim);
+    text-decoration: none;
+    padding: 6px 12px;
+    border-radius: 4px;
+    border: 1px solid transparent;
+    transition: all 0.2s ease;
+  }
+
+  .home-btn:hover{
+    color: var(--accent);
+    border-color: var(--line-bright);
+    background: rgba(22, 32, 46, 0.6);
+  }
+
+  .header-tag{
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 11px;
+    color: var(--accent);
+    background: rgba(0, 212, 255, 0.05);
+    border: 1px solid var(--line-bright);
+    padding: 3px 8px;
+    border-radius: 3px;
+  }
+
+  .header-tag .dot{
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--accent);
+    animation: pulse 2.4s ease-in-out infinite;
+  }
+
+  /* animated terrain background */
+  #terrain{
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+
+  .vignette{
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    background: linear-gradient(to bottom,
+      rgba(10,14,23,0.55) 0%,
+      rgba(10,14,23,0.15) 18%,
+      rgba(10,14,23,0.05) 40%,
+      rgba(10,14,23,0.25) 100%);
+  }
+
+  main{
+    position: relative;
+    z-index: 1;
+    max-width: var(--max-w);
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+
+  section{
+    padding: 120px 0;
+    border-bottom: 1px solid var(--line);
+    background: rgba(10, 14, 23, 0.72);
+  }
+  section:last-of-type{ border-bottom: none; }
+
+  /* ---------- HERO ---------- */
+  .hero{
+    padding-top: 140px;
+    padding-bottom: 100px;
+  }
+
+  .wordmark{
+    font-family: 'Orbitron', sans-serif;
+    font-weight: 800;
+    font-size: clamp(48px, 9vw, 84px);
+    letter-spacing: 0.02em;
+    color: var(--text);
+    line-height: 1;
+  }
+
+  .wordmark .char{
+    display: inline-block;
+    opacity: 0;
+  }
+
+  .tagline{
+    margin-top: 20px;
+    font-size: 19px;
+    color: var(--text-dim);
+    font-weight: 400;
+    opacity: 0;
+    transform: translateY(8px);
+  }
+
+  .status-tag{
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 32px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12.5px;
+    letter-spacing: 0.04em;
+    color: var(--accent);
+    border: 1px solid var(--line-bright);
+    padding: 7px 14px;
+    border-radius: 3px;
+    background: rgba(0, 212, 255, 0.03);
+    opacity: 0;
+    transform: translateY(8px);
+  }
+
+  .status-tag .dot{
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--accent);
+    animation: pulse 2.4s ease-in-out infinite;
+  }
+
+  @keyframes pulse{
+    0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(0,212,255,0.5); }
+    50% { opacity: 0.6; box-shadow: 0 0 0 4px rgba(0,212,255,0); }
+  }
+
+  /* ---------- SECTION LABELS ---------- */
+  .label{
+    font-family: 'Orbitron', sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--accent-dim);
+    margin-bottom: 18px;
+  }
+
+  h2{
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 28px;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 20px;
+    max-width: 34ch;
+  }
+
+  p{
+    color: var(--text-dim);
+    max-width: 62ch;
+  }
+
+  p + p{ margin-top: 14px; }
+
+  /* ---------- CAPABILITIES ---------- */
+  .cap-list{
+    list-style: none;
+    margin-top: 36px;
+  }
+
+  .cap-item{
+    display: flex;
+    gap: 20px;
+    padding: 24px 0;
+    border-top: 1px solid var(--line);
+  }
+  .cap-item:last-child{ padding-bottom: 0; }
+
+  .cap-mark{
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    color: var(--text-dimmer);
+    padding-top: 2px;
+    flex-shrink: 0;
+    width: 24px;
+  }
+
+  .cap-body h3{
+    font-size: 17px;
+    font-weight: 600;
+    color: var(--text);
+    margin-bottom: 4px;
+  }
+
+  .cap-body p{
+    font-size: 15.5px;
+    color: var(--text-dim);
+  }
+
+  .cap-planned{
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10.5px;
+    letter-spacing: 0.05em;
+    color: var(--accent-dim);
+    border: 1px solid var(--line-bright);
+    padding: 2px 7px;
+    border-radius: 2px;
+    margin-left: 8px;
+    vertical-align: middle;
+  }
+
+  /* ---------- TERMINAL STATUS BLOCK ---------- */
+  .terminal{
+    margin-top: 32px;
+    background: var(--bg-panel);
+    border: 1px solid var(--line-bright);
+    border-radius: 4px;
+    padding: 28px 28px 24px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 14px;
+    line-height: 1.9;
+  }
+
+  .term-prompt{
+    color: var(--text-dimmer);
+  }
+  .term-prompt .cmd{
+    color: var(--text-dim);
+  }
+
+  .term-line{
+    color: var(--text-dimmer);
+    white-space: pre;
+    opacity: 0;
+  }
+
+  .term-line .val{
+    color: var(--accent);
+  }
+
+  .term-meta{
+    margin-top: 14px;
+    color: var(--text-dimmer);
+    font-size: 12px;
+    opacity: 0;
+  }
+
+  .cursor{
+    display: inline-block;
+    width: 8px;
+    height: 14px;
+    background: var(--accent);
+    margin-left: 2px;
+    vertical-align: -2px;
+    animation: blink 1s step-end infinite;
+  }
+
+  @keyframes blink{
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
+  }
+
+  /* ---------- PHILOSOPHY ---------- */
+  .philosophy p{
+    font-size: 19px;
+    color: var(--text);
+    max-width: 46ch;
+    font-weight: 400;
+    line-height: 1.6;
+  }
+
+  /* ---------- FOLLOW ---------- */
+  .follow{
+    text-align: left;
+  }
+
+  .follow-links{
+    margin-top: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .follow-links a{
+    color: var(--accent);
+    text-decoration: none;
+    font-size: 15px;
+    border-bottom: 1px solid var(--line-bright);
+    padding-bottom: 2px;
+    width: fit-content;
+    transition: border-color 0.2s ease, color 0.2s ease;
+  }
+
+  .follow-links a:hover{
+    border-color: var(--accent);
+    color: #7ee8ff;
+  }
+
+  footer{
+    padding: 40px 0 60px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11.5px;
+    color: var(--text-dimmer);
+    letter-spacing: 0.03em;
+  }
+
+  /* reduced motion */
+  @media (prefers-reduced-motion: reduce){
+    *{ animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
+    .wordmark .char, .tagline, .status-tag, .term-line, .term-meta{ opacity: 1 !important; transform: none !important; }
+  }
+
+  /* keyboard focus visibility */
+  a:focus-visible{
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
+  }
+
+  @media (max-width: 640px){
+    section{ padding: 80px 0; }
+    .hero{ padding-top: 100px; padding-bottom: 70px; }
+    body{ font-size: 16px; }
+    .terminal{ padding: 22px 18px; font-size: 13px; }
+  }
+</style>
+</head>
+<body>
+
+<header class="aegis-header">
+  <div class="header-inner">
+    <a href="/#projects" class="home-btn">
+      <span>&larr;</span>
+      <span>HOME</span>
+    </a>
+    <div class="header-tag">
+      <span class="dot"></span>
+      <span>AEGIS // SYS_001</span>
+    </div>
+  </div>
+</header>
+
+<canvas id="terrain"></canvas>
+<div class="vignette"></div>
+
+<main>
+
+  <section class="hero">
+    <h1 class="wordmark" id="wordmark">AEGIS</h1>
+    <p class="tagline" id="tagline">Your data. Your server. Your rules.</p>
+    <div class="status-tag" id="statusTag">
+      <span class="dot"></span>
+      STATUS: IN_DEVELOPMENT
+    </div>
+  </section>
+
+  <section>
+    <div class="label">What it is</div>
+    <h2>One box, plugged into your own home.</h2>
+    <p>Aegis is a pre-configured mini PC that puts three things you'd otherwise hand to someone else's servers back under your own roof: your DNS traffic, your files, and your access to your own network from anywhere.</p>
+    <p>No subscriptions. No dashboards owned by a company deciding what to do with your data. Just a small machine that works for you.</p>
+  </section>
+
+  <section>
+    <div class="label">Capabilities</div>
+    <ul class="cap-list">
+      <li class="cap-item">
+        <span class="cap-mark">01</span>
+        <div class="cap-body">
+          <h3>Private DNS &amp; ad-blocking</h3>
+          <p>Network-wide filtering that runs locally — nothing about what you browse leaves the house.</p>
+        </div>
+      </li>
+      <li class="cap-item">
+        <span class="cap-mark">02</span>
+        <div class="cap-body">
+          <h3>Personal cloud</h3>
+          <p>Your own storage, reachable from anywhere, living on hardware you actually own.</p>
+        </div>
+      </li>
+      <li class="cap-item">
+        <span class="cap-mark">03</span>
+        <div class="cap-body">
+          <h3>Secure remote access <span class="cap-planned">planned</span></h3>
+          <p>Reach your home network safely from outside it, without opening it up to the internet.</p>
+        </div>
+      </li>
+    </ul>
+  </section>
+
+  <section>
+    <div class="label">Build status</div>
+    <h2>Nothing here is finished yet — here's exactly where it stands.</h2>
+    <div class="terminal" id="terminal">
+      <div class="term-prompt">root@aegis:~$ <span class="cmd">status</span></div>
+      <br>
+      <div class="term-line" data-text="&gt; hardware ......... <span class='val'>undecided</span>"></div>
+      <div class="term-line" data-text="&gt; software ......... <span class='val'>in_progress</span>"></div>
+      <div class="term-line" data-text="&gt; stage ............ <span class='val'>concept &rarr; dev</span>"></div>
+      <div class="term-meta">last updated: manually, by a human, occasionally<span class="cursor"></span></div>
+    </div>
+  </section>
+
+  <section class="philosophy">
+    <div class="label">Why</div>
+    <p>Every convenient cloud service is a company deciding it's fine to hold your data. Aegis starts from the opposite assumption — that the most private option is also the one you can see, touch, and unplug yourself.</p>
+  </section>
+
+  <section class="follow">
+    <div class="label">Follow along</div>
+    <h2>Aegis isn't ready to ship. But you can watch it get there.</h2>
+    <div class="follow-links">
+      <a href="https://github.com/lanofgajanan" target="_blank" rel="noopener noreferrer" id="link-github">Development log on GitHub →</a>
+      <a href="mailto:lanofgajanan@gmail.com">Get in touch →</a>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div style="max-width: var(--max-w); margin: 0 auto; padding: 0 24px; display: flex; justify-content: space-between; align-items: center;">
+    <div>AEGIS — built by Gajanan Lohar</div>
+    <a href="/#overview" style="color: var(--text-dimmer); text-decoration: none;">&larr; Return to main site</a>
+  </div>
+</footer>
+
+<script type="module">
+import { animate, stagger, onScroll, createTimeline, utils } from 'https://cdn.jsdelivr.net/npm/animejs@4.5.0/dist/bundles/anime.esm.min.js';
+
+var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+/* ---------- render term-line innerHTML from data-text ---------- */
+document.querySelectorAll('.term-line').forEach(function(el){
+  el.innerHTML = el.getAttribute('data-text');
+});
+
+/* ---------- split wordmark into chars ---------- */
+var wordmark = document.getElementById('wordmark');
+var text = wordmark.textContent;
+wordmark.innerHTML = text.split('').map(function(ch){
+  return '<span class="char">' + ch + '</span>';
+}).join('');
+
+/* ==================================================================
+   TERRAIN BACKGROUND
+   ================================================================== */
+var canvas = document.getElementById('terrain');
+var ctx = canvas.getContext('2d');
+var W, H, DPR;
+
+function resize(){
+  DPR = Math.min(window.devicePixelRatio || 1, 1.5);
+  W = window.innerWidth;
+  H = window.innerHeight;
+  canvas.width = Math.round(W * DPR);
+  canvas.height = Math.round(H * DPR);
+  canvas.style.width = W + 'px';
+  canvas.style.height = H + 'px';
+  ctx.setTransform(DPR, 0, 0, DPR, 0, 0);
+  requestRender();
+}
+
+var ROWS = 15;
+var COLS = 26;
+var HORIZON_RATIO = 0.2;
+var drive = { phase: 0, pulse: 0 };
+var rowGeo = [];
+
+function buildGeometry(){
+  rowGeo.length = 0;
+  var horizonY = H * HORIZON_RATIO;
+  for (var r = 0; r < ROWS; r++){
+    var depthT = r / (ROWS - 1);
+    var persp = Math.pow(depthT, 1.9);
+    var nearT = 1 - persp;
+    var screenY = horizonY + nearT * (H - horizonY);
+    var rowW = W * (0.1 + nearT * 1.15);
+    var cols = [];
+    for (var c = 0; c < COLS; c++){
+      var xT = (c / (COLS - 1)) - 0.5;
+      cols.push({ x: (W / 2) + xT * rowW, xT: xT });
+    }
+    rowGeo.push({ depthT: depthT, nearT: nearT, screenY: screenY, cols: cols });
+  }
+}
+
+function drawTerrain(){
+  ctx.clearRect(0, 0, W, H);
+
+  for (var r = 0; r < ROWS; r++){
+    var row = rowGeo[r];
+    var nearT = row.nearT;
+    var amp = (20 + drive.pulse * 24) * (0.25 + nearT * 0.75);
+    var alpha = Math.min((0.1 + nearT * 0.6) * (0.75 + drive.pulse * 0.45), 0.9);
+
+    ctx.beginPath();
+    ctx.strokeStyle = 'rgba(0, 212, 255, ' + (alpha * 0.6) + ')';
+    ctx.lineWidth = 0.8;
+
+    var pts = row.cols;
+    for (var c = 0; c < pts.length; c++){
+      var p = pts[c];
+      var wave = Math.sin(p.xT * 7.5 + row.depthT * 5.5 - drive.phase) * amp;
+      var y = row.screenY - wave;
+      p._y = y;
+      if (c === 0) ctx.moveTo(p.x, y);
+      else ctx.lineTo(p.x, y);
+    }
+    ctx.stroke();
+
+    if (nearT > 0.55){
+      ctx.fillStyle = 'rgba(0, 212, 255, ' + alpha + ')';
+      var radius = 1 + nearT * 1.8;
+      for (var c2 = 0; c2 < pts.length; c2++){
+        ctx.beginPath();
+        ctx.arc(pts[c2].x, pts[c2]._y, radius, 0, Math.PI * 2);
+        ctx.fill();
+      }
+    }
+  }
+
+  ctx.beginPath();
+  ctx.strokeStyle = 'rgba(0, 212, 255, 0.1)';
+  ctx.lineWidth = 0.6;
+  for (var c3 = 0; c3 < COLS; c3++){
+    for (var r2 = 0; r2 < ROWS; r2++){
+      var pt = rowGeo[r2].cols[c3];
+      if (r2 === 0) ctx.moveTo(pt.x, pt._y);
+      else ctx.lineTo(pt.x, pt._y);
+    }
+  }
+  ctx.stroke();
+}
+
+var renderQueued = false;
+function requestRender(){
+  if (renderQueued) return;
+  renderQueued = true;
+  requestAnimationFrame(function(){
+    renderQueued = false;
+    buildGeometry();
+    drawTerrain();
+  });
+}
+
+resize();
+window.addEventListener('resize', resize);
+
+var lastY = window.scrollY;
+var rotVel = 0, rot = 0, settleRAF = null;
+
+function settle(){
+  rot += (rotVel - rot) * 0.14;
+  rotVel *= 0.82;
+  canvas.style.transform = 'rotate(' + rot.toFixed(3) + 'deg)';
+  if (Math.abs(rotVel) > 0.01 || Math.abs(rot) > 0.01){
+    settleRAF = requestAnimationFrame(settle);
+  } else {
+    rot = 0; rotVel = 0;
+    canvas.style.transform = 'rotate(0deg)';
+    settleRAF = null;
+  }
+}
+
+window.addEventListener('scroll', function(){
+  var y = window.scrollY;
+  var dy = y - lastY;
+  lastY = y;
+
+  drive.phase += dy * 0.012;
+  rotVel += dy * 0.006;
+
+  requestRender();
+  if (!settleRAF) settleRAF = requestAnimationFrame(settle);
+}, { passive: true });
+
+buildGeometry();
+drawTerrain();
+
+/* ==================================================================
+   SCROLL-LINKED ANIMATIONS
+   ================================================================== */
+if (!reduceMotion){
+  document.querySelectorAll('section').forEach(function(section){
+    onScroll({
+      target: section,
+      enter: 'top 80%',
+      leave: 'bottom 20%',
+      onEnter: function(){
+        animate(drive, {
+          pulse: [1, 0],
+          duration: 1400,
+          ease: 'outExpo',
+          onUpdate: requestRender
+        });
+      }
+    });
+  });
+
+  animate('#wordmark, #tagline, #statusTag', {
+    translateY: [0, -36],
+    ease: 'linear',
+    autoplay: onScroll({
+      target: '.hero',
+      sync: true
+    })
+  });
+
+  createTimeline({ defaults: { ease: 'outExpo' } })
+    .add('.wordmark .char', {
+      opacity: [0, 1],
+      translateY: [16, 0],
+      duration: 700,
+      delay: stagger(45)
+    })
+    .add('#tagline', {
+      opacity: [0, 1],
+      translateY: [8, 0],
+      duration: 600
+    }, '-=300')
+    .add('#statusTag', {
+      opacity: [0, 1],
+      translateY: [8, 0],
+      duration: 500
+    }, '-=350');
+
+  onScroll({
+    target: '#terminal',
+    enter: 'top 75%',
+    onEnter: function(){
+      createTimeline({ defaults: { ease: 'outQuad' } })
+        .add('.term-line', {
+          opacity: [0, 1],
+          duration: 1,
+          delay: stagger(500)
+        })
+        .add('.term-meta', {
+          opacity: [0, 1],
+          duration: 400
+        }, '-=200');
+    }
+  });
+} else {
+  utils.set('.wordmark .char, #tagline, #statusTag, .term-line, .term-meta', { opacity: 1 });
+}
+</script>
+
+</body>
+</html>

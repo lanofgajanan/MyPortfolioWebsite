@@ -5,10 +5,17 @@
     --font-geist: 'Geist', -apple-system, BlinkMacSystemFont, sans-serif;
     --font-mono: 'Geist Mono', 'Share Tech Mono', monospace;
     --font-cyber: 'Orbitron', 'Geist Mono', sans-serif;
+    --font-space: 'Space Grotesk', sans-serif;
+    --font-jetbrains: 'JetBrains Mono', monospace;
     --color-primary: #a78bfa;
     --color-bg: #09090b;
     --color-emerald: #34d399;
     --color-cyan: #38bdf8;
+    --color-aegis-accent: #00d4ff;
+    --color-aegis-bg: #0a0e17;
+    --color-aegis-panel: #0d1420;
+    --color-aegis-line: #16202e;
+    --color-aegis-line-bright: #1a3a52;
     --color-surface-lowest: #050507;
     --color-surface: #0c0c0f;
     --color-surface-hover: #18181b;
@@ -39,6 +46,14 @@
 
 .font-mono-hud {
   font-family: 'Share Tech Mono', 'Geist Mono', monospace;
+}
+
+.font-space-grotesk {
+  font-family: 'Space Grotesk', sans-serif;
+}
+
+.font-jetbrains {
+  font-family: 'JetBrains Mono', monospace;
 }
 
 /* CRT Scanline Effect */

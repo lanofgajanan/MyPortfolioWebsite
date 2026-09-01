@@ -6,7 +6,17 @@ and references to commit hashes where relevant.
 
 ## [Unreleased]
 
-## [2.1.0] - 2026-08-21
+## [2.2.0] - 2026-09-01
+### Added
+- **HUD Navigation Bar (`HUDNavigation.tsx`)**: Top-level cyberpunk tab selector allowing users to switch between `[ 01 // OVERVIEW ]` and `[ 02 // PROJECTS ]` with deep-link hash routing (`#overview`, `#projects`, `#aegis`).
+- **Projects Matrix (`ProjectsView.tsx`)**: High-tech directory view featuring the newly added **Aegis** hardware/privacy system and future project incubation slots.
+- **Aegis Project Experience (`AegisProjectView.tsx` & `AegisCanvasTerrain.tsx`)**: Full port and integration of the Aegis product page featuring its scroll-driven 2D perspective canvas terrain grid, terminal diagnostics block (`root@aegis:~$ status`), capability list, and responsive layout.
+- **Home Navigation Buttons**: Added minimal cyberpunk top bar with `HOME` and `PROJECTS` return buttons on both the in-app Aegis view and the standalone `/aegis/index.html` static route.
+- **Standalone Aegis Route**: Standalone static teaser page deployed to `/aegis/index.html`.
+
+### Changed
+- Rebuilt production bundle (`index-c1QuWOzf.js` and `index-BCg5Fo3F.css`) and synced to repository root.
+- Integrated Google Fonts for `Space Grotesk` and `JetBrains Mono`.
 ### Added
 - Mobile-first layout: stage now min-height + scroll-safe instead of a fixed h-screen clip.
 - Mobile HUD chip: single compact telemetry display on small screens to prevent corner collisions.

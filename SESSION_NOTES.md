@@ -6,6 +6,19 @@ release-oriented changelog); this file is the operational diary —
 what was attempted, what worked, what broke, and how the site is
 served.
 
+## Session 3 — 2026-09-01 — Projects Tab & Aegis Integration
+
+**Goal:** Add a high-tech Projects tab to the Obsidian Cyber Terminal portfolio and integrate the newly uploaded Aegis product webpage as a featured project with seamless Home navigation.
+
+### What was done
+- Extracted and analyzed `website_stuff/aegis-docs.zip` containing the Aegis PRD, engine docs, and scroll-driven canvas teaser page.
+- Created `temp-site/app/src/components/HUDNavigation.tsx` for top-level cyberpunk tab switching (`[ 01 // OVERVIEW ]` and `[ 02 // PROJECTS ]`).
+- Created `temp-site/app/src/components/ProjectsView.tsx` with a rich system archive matrix highlighting Aegis with status badges, capabilities, and action triggers.
+- Created `temp-site/app/src/components/aegis/AegisCanvasTerrain.tsx` and `AegisProjectView.tsx` implementing the full Aegis experience, scroll-driven 2D perspective terrain grid, terminal diagnostic block, and minimal home navigation button.
+- Added URL hash routing (`#overview`, `#projects`, `#aegis`) with hashchange listeners for native browser navigation.
+- Created standalone static page at `temp-site/aegis/index.html` with matching top Home header.
+- Rebuilt app via `npm run build` and deployed new bundles (`index-c1QuWOzf.js`, `index-BCg5Fo3F.css`) directly to `temp-site/` root.
+
 ---
 
 ## Session 2 — 2026-08-21 — Footer version correction + session-notes process

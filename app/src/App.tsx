@@ -8,10 +8,46 @@ import { InteractiveGlitchBackground } from './components/InteractiveGlitchBackg
 import { SegmentProgressBar } from './components/SegmentProgressBar';
 import { GlitchHeroText } from './components/GlitchHeroText';
 import { HUDCornerTelemetry } from './components/HUDCornerTelemetry';
+import { HUDNavigation, TabType } from './components/HUDNavigation';
+import { ProjectsView } from './components/ProjectsView';
+import { AegisProjectView } from './components/aegis/AegisProjectView';
 
 export default function App() {
   const [isMobile, setIsMobile] = useState(false);
   const [cursorPos, setCursorPos] = useState({ x: 0, y: 0 });
+  const [activeTab, setActiveTab] = useState<TabType>('overview');
+
+  // Handle URL hash routing
+  useEffect(() => {
+    const handleHashChange = () => {
+      const hash = window.location.hash.toLowerCase().replace(/^#\/?/, '');
+      if (hash === 'projects') {
+        setActiveTab('projects');
+      } else if (hash === 'aegis' || hash === 'projects/aegis') {
+        setActiveTab('aegis');
+      } else {
+        setActiveTab('overview');
+      }
+    };
+
+    handleHashChange();
+    window.addEventListener('hashchange', handleHashChange);
+    return () => window.removeEventListener('hashchange', handleHashChange);
+  }, []);
+
+  const handleSelectTab = (tab: TabType) => {
+    setActiveTab(tab);
+    if (tab === 'overview') {
+      window.location.hash = '';
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    } else if (tab === 'projects') {
+      window.location.hash = 'projects';
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    } else if (tab === 'aegis') {
+      window.location.hash = 'aegis';
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  };
 
   useEffect(() => {
     const checkMobile = () => setIsMobile(window.innerWidth < 640);
@@ -19,6 +55,7 @@ export default function App() {
     window.addEventListener('resize', checkMobile);
     return () => window.removeEventListener('resize', checkMobile);
   }, []);
+
   const [cursorCoords, setCursorCoords] = useState({
     lat: '34.8522',
     lng: '-118.2437',
@@ -37,14 +74,8 @@ export default function App() {
     const ratioX = Math.min(Math.max(x / w, 0), 1);
     const ratioY = Math.min(Math.max(y / h, 0), 1);
 
-    // Realistic GPS coordinate mapping around the reference coordinates [34.8522, -118.2437]
     const latNum = 34.8000 + ratioY * 0.0950;
     const lngNum = -118.2000 - ratioX * 0.0850;
-
-    // Hex telemetry generator
-    const hexG = Math.floor(200 + ratioX * 55).toString(16).toUpperCase().padStart(2, '0');
-    const hexB = Math.floor(ratioY * 80).toString(16).toUpperCase().padStart(2, '0');
-    const hexCode = `#08FF${hexB === '00' ? '00' : hexB}`;
 
     const altLatHex = (34.8000 + (1 - ratioY) * 0.0950).toFixed(4).replace('.', '.B');
     const altLngHex = (-8.9000 - ratioX * 0.1500).toFixed(4);
@@ -62,11 +93,11 @@ export default function App() {
   }, []);
 
   useEffect(() => {
-    // Initial center coordinates
     const initialX = window.innerWidth / 2;
     const initialY = window.innerHeight / 2;
     setCursorPos({ x: initialX, y: initialY });
     updateCoordinates(initialX, initialY);
+
     const handleMouseMove = (e: MouseEvent) => {
       setCursorPos({ x: e.clientX, y: e.clientY });
       updateCoordinates(e.clientX, e.clientY);
@@ -89,6 +120,16 @@ export default function App() {
     };
   }, [updateCoordinates]);
 
+  // If in Aegis standalone project view
+  if (activeTab === 'aegis') {
+    return (
+      <AegisProjectView
+        onNavigateHome={() => handleSelectTab('overview')}
+        onNavigateProjects={() => handleSelectTab('projects')}
+      />
+    );
+  }
+
   return (
     <main
       id="obsidian-hud-root"
@@ -100,23 +141,41 @@ export default function App() {
       {/* 2. CRT Scanline Grid Overlay */}
       <div className="absolute inset-0 w-full h-full crt-overlay z-20 pointer-events-none" />
 
+      {/* 3. Top Cyberpunk HUD Navigation Bar */}
+      <HUDNavigation
+        activeTab={activeTab}
+        onSelectTab={handleSelectTab}
+      />
+
       {/* 4. Dynamic Scanline Sweep */}
       <div className="scanline-sweep z-20 pointer-events-none" />
 
       {/* 5. Minimalistic Four-Corner Live Cursor Coordinates */}
       <HUDCornerTelemetry cursorCoords={cursorCoords} />
 
-      {/* 6. Centerpiece Glitch Title & Bio-Protocols Beacon */}
-      <div className="flex-1 flex flex-col items-center justify-center relative z-10 w-full max-w-5xl mx-auto px-4 pointer-events-auto">
-        <GlitchHeroText
-          title="GAJANAN LOHAR"
-          status="SYSTEM STATUS: UNDER CONSTRUCTION // INITIALIZING BIO-PROTOCOLS..."
-          intensity="medium"
-        />
+      {/* 6. Active View Content Area */}
+      {activeTab === 'overview' ? (
+        <div className="flex-1 flex flex-col items-center justify-center relative z-10 w-full max-w-5xl mx-auto px-4 pointer-events-auto my-auto py-20 sm:py-24">
+          <GlitchHeroText
+            title="GAJANAN LOHAR"
+            status="SYSTEM STATUS: UNDER CONSTRUCTION // INITIALIZING BIO-PROTOCOLS..."
+            intensity="medium"
+          />
 
-        {/* Futuristic Segmented Progress Bar */}
-        <SegmentProgressBar />
-      </div>
+          {/* Futuristic Segmented Progress Bar */}
+          <SegmentProgressBar />
+        </div>
+      ) : (
+        <div className="flex-1 flex flex-col items-center relative z-10 w-full">
+          <ProjectsView
+            onOpenProject={(projectId) => {
+              if (projectId === 'aegis') {
+                handleSelectTab('aegis');
+              }
+            }}
+          />
+        </div>
+      )}
 
       {/* 7. Footer Text */}
       <div className="relative sm:absolute sm:bottom-8 w-full flex justify-center items-center gap-3 text-[10px] sm:text-xs font-mono-hud text-zinc-500 tracking-widest z-30 pointer-events-none opacity-80 mt-6 mb-2 sm:mt-0">

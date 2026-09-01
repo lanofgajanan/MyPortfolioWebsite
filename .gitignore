@@ -2,8 +2,15 @@
 Thumbs.db
 node_modules/
 .env
-.env.local
+.env.*
+!.env.example
 *.log
+*.key
+*.pem
+*.cert
+*.ovpn
+*.conf
+*.p12
 .vscode/
 .idea/
 *.bak
