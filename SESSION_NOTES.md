@@ -6,20 +6,26 @@ release-oriented changelog); this file is the operational diary —
 what was attempted, what worked, what broke, and how the site is
 served.
 
-## Session 3 — 2026-09-01 — Projects Tab & Aegis Integration
+## Session 3 — 2026-09-01 — Projects Tab, Aegis Integration, Scroll Fixes, Security & SEO
 
-**Goal:** Add a high-tech Projects tab to the Obsidian Cyber Terminal portfolio and integrate the newly uploaded Aegis product webpage as a featured project with seamless Home navigation.
+**Goal:** Add a high-tech Projects tab to the Obsidian Cyber Terminal portfolio, integrate the newly uploaded Aegis product webpage as a featured project with seamless Home navigation, fix viewport scrolling issues, harden security against sensitive file leaks, and optimize SEO.
 
 ### What was done
-- Extracted and analyzed `website_stuff/aegis-docs.zip` containing the Aegis PRD, engine docs, and scroll-driven canvas teaser page.
-- Created `temp-site/app/src/components/HUDNavigation.tsx` for top-level cyberpunk tab switching (`[ 01 // OVERVIEW ]` and `[ 02 // PROJECTS ]`).
-- Created `temp-site/app/src/components/ProjectsView.tsx` with a single-card showcase for Aegis (removed placeholders).
-- Created `temp-site/app/src/components/aegis/AegisCanvasTerrain.tsx` and `AegisProjectView.tsx` implementing the full Aegis experience, scroll-driven 2D perspective terrain grid, terminal diagnostic block, and minimal home navigation button.
-- Added URL hash routing (`#overview`, `#projects`, `#aegis`) with hashchange listeners for native browser navigation.
-- Fixed Bug 1 (main website scrolling): enforced strict `overflow-hidden` and viewport locking on Overview and Projects so the single page never scrolls.
-- Fixed Bug 2 (Aegis scroll lock): dynamically set `overflowY: auto` on document and body when viewing Aegis so the full page and canvas terrain scroll smoothly.
-- Created standalone static page at `temp-site/aegis/index.html` with matching top Home header.
-- Rebuilt app via `npm run build` and deployed new bundles (`index-CF_GE9Uk.js`, `index-C6KJVl1p.css`) directly to `temp-site/` root.
+- **Aegis Product Ingestion:** Extracted and analyzed `website_stuff/aegis-docs.zip` containing the Aegis PRD, engine docs, and scroll-driven canvas teaser page.
+- **HUD Navigation System:** Created `temp-site/app/src/components/HUDNavigation.tsx` for top-level cyberpunk tab switching (`[ 01 // OVERVIEW ]` and `[ 02 // PROJECTS ]`) with URL hash synchronization (`#overview`, `#projects`, `#aegis`) and browser history handling.
+- **Projects Matrix:** Created `temp-site/app/src/components/ProjectsView.tsx` with a single focused showcase card for **Aegis** with capabilities (`Private DNS`, `Personal Cloud`, `Remote Access`, `Mini-PC Box`), status tags, and action triggers.
+- **Aegis Full Experience Port:** Created `temp-site/app/src/components/aegis/AegisCanvasTerrain.tsx` and `AegisProjectView.tsx` implementing the scroll-driven 2D perspective canvas terrain grid, terminal diagnostics block (`root@aegis:~$ status`), capability list, and minimal home navigation button.
+- **Bug 1 Fix (Main Terminal Viewport Scroll):** Root caused and resolved unwanted scrolling on the Overview and Projects views by enforcing strict viewport height locking (`h-screen h-[100dvh] max-h-screen overflow-hidden`) and removing the mobile `@media (max-width: 640px) { body { overflow-y: auto; } }` rule.
+- **Bug 2 Fix (Aegis Page Scroll Lock):** Removed global `overflow-hidden` from `body` in `index.html` and implemented dynamic viewport scroll management in `App.tsx` (`overflowY: auto` on document/body when viewing Aegis) so the full page and canvas terrain physics scroll naturally and smoothly.
+- **Security & Privacy Audit:** Hardened `.gitignore` against private keys (`*.key`, `*.pem`, `*.cert`), VPN profiles (`*.ovpn`, `*.conf`), and environment files (`.env*`). Ran secret scans across the repo — zero secrets found. `npm audit` returned 0 vulnerabilities.
+- **SEO & Structured Data:** Enhanced title, description, keywords, canonical URLs (`https://lanofgajanan.pp.ua/`), Open Graph tags, Twitter cards, and Schema.org JSON-LD structured data (`Person`, `WebSite`, `Product`). Updated `sitemap.xml` with the latest timestamp and `/aegis/` route.
+- **Standalone Static Route:** Deployed standalone static page at `temp-site/aegis/index.html` with matching top Home header.
+- **Build & Deploy:** Rebuilt production bundle via `npm run build` and synced new assets (`index-CF_GE9Uk.js`, `index-C6KJVl1p.css`) and `index.html` directly to the `temp-site/` root directory.
+- **Version Control:** Pushed commits `8eef798` and `1ecf434` to `origin/main` on GitHub (`lanofgajanan/MyPortfolioWebsite.git`).
+
+### Notes / Gotchas
+- When adding future views/routes, ensure `App.tsx`'s view-based scroll controller (`overflow-hidden` vs `overflow-y-auto`) matches whether the view is a single-screen HUD terminal or a long-form scrollable document.
+- Root `.gitignore` explicitly prevents accidental commits of server private keys or VPN configurations residing in the user's home directory.
 
 ---
 
