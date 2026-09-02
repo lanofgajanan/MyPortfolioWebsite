@@ -22,6 +22,8 @@ and references to commit hashes where relevant.
 ### Changed
 - Rebuilt production bundle (`index-CF_GE9Uk.js` and `index-C6KJVl1p.css`) and synced to repository root.
 - Integrated Google Fonts for `Space Grotesk` and `JetBrains Mono`.
+
+## [2.1.0] - 2026-08-21
 ### Added
 - Mobile-first layout: stage now min-height + scroll-safe instead of a fixed h-screen clip.
 - Mobile HUD chip: single compact telemetry display on small screens to prevent corner collisions.
